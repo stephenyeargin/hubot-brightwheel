@@ -95,7 +95,7 @@ describe 'hubot-brightwheel', ->
       try
         expect(selfRoom.messages).to.eql [
           ['alice', '@hubot brightwheel photo']
-          ['hubot', 'Jenny was in a photo. - https://github.com/github.png | Jul 20, 2021 9:55 AM']
+          ['hubot', 'Jenny was in a photo. - https://github.com/github.png - Riding the tricycle today🤩 | Jul 20, 2021 9:55 AM']
           ['hubot', 'Jenny was in a photo. - https://github.com/github.png | Jul 16, 2021 9:35 AM']
           ['hubot', 'Jenny was in a photo. - https://github.com/github.png | Jun 29, 2021 9:23 AM']
           ['hubot', 'Jenny was in a photo. - https://github.com/github.png | Jun 28, 2021 11:43 AM']
@@ -120,10 +120,10 @@ describe 'hubot-brightwheel', ->
       try
         expect(selfRoom.messages).to.eql [
           ['alice', '@hubot brightwheel video']
-          ['hubot', 'Jenny was in a video. - https://cdn.mybrightwheel.com/videos/1-download.mp4 | Jul 16, 2021 9:27 AM']
-          ['hubot', 'Jenny was in a video. - https://cdn.mybrightwheel.com/videos/2-download.mp4 | Jul 9, 2021 9:54 AM']
-          ['hubot', 'Jenny was in a video. - https://cdn.mybrightwheel.com/videos/3-download.mp4 | Jul 9, 2021 9:43 AM']
-          ['hubot', 'Jenny was in a video. - https://cdn.mybrightwheel.com/videos/4-download.mp4 | Jul 6, 2021 8:51 AM']
+          ['hubot', 'Jenny was in a video. - https://cdn.mybrightwheel.com/videos/1-download.mp4 - Water play🤩 | Jul 16, 2021 9:27 AM']
+          ['hubot', 'Jenny was in a video. - https://cdn.mybrightwheel.com/videos/2-download.mp4 - 🤩 | Jul 9, 2021 9:54 AM']
+          ['hubot', 'Jenny was in a video. - https://cdn.mybrightwheel.com/videos/3-download.mp4 - Water play🤩 | Jul 9, 2021 9:43 AM']
+          ['hubot', 'Jenny was in a video. - https://cdn.mybrightwheel.com/videos/4-download.mp4 - Jenny uses her gross motor skills and coordination to take a few steps!! Good job Jenny🤩 | Jul 6, 2021 8:51 AM']
           ['hubot', 'Jenny was in a video. - https://cdn.mybrightwheel.com/videos/5-download.mp4 | May 19, 2021 5:23 PM']
         ]
         done()

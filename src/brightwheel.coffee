@@ -82,6 +82,7 @@ module.exports = (robot) ->
         textOutput = textOutput + " was in a photo. - #{activity['media']['image_url']}"
         slackOutput['attachments'].push(merge(slackAttachmentTemplate, {
           fallback: textOutput,
+          text: activity['note'] || null,
           title: "#{activity['target']['first_name']} was in a photo.",
           title_link: activity['media']['image_url'],
           image_url: activity['media']['image_url'],
@@ -91,6 +92,7 @@ module.exports = (robot) ->
         textOutput = textOutput + " was in a video. - #{activity['video_info']['downloadable_url']}"
         slackOutput['attachments'].push(merge(slackAttachmentTemplate, {
           fallback: textOutput,
+          text: activity['note'] || null,
           title: "#{activity['target']['first_name']} was in a video.",
           title_link: activity['video_info']['downloadable_url'],
           image_url: activity['video_info']['thumbnail_url'],
@@ -131,6 +133,8 @@ module.exports = (robot) ->
           title: "#{activity['target']['first_name']} - #{activity['action_type'].replace('ac_','')}"
         }))
     event_time = moment(activity['event_date'])
+    if activity['note']
+      textOutput = textOutput + " - #{activity['note']}"
     textOutput = textOutput + " | #{event_time.format('lll')}"
 
     switch robot.adapterName
