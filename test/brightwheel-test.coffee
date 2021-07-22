@@ -61,6 +61,27 @@ describe 'hubot-brightwheel', ->
       return
     , 1000)
 
+  it 'gets an empty activity list', (done) ->
+    nock('https://schools.mybrightwheel.com')
+      .get('/api/v1/students/778d7815-7293-4aa5-85e3-f0fe08159ae2/activities')
+      .query({page_size: "5"})
+      .matchHeader('cookie', '_brightwheel_v2=thelongauthstring')
+      .replyWithFile(200, __dirname + '/fixtures/activities-empty.json', {'Content-type': 'application/json'})
+
+    selfRoom = @room
+    selfRoom.user.say('alice', '@hubot brightwheel')
+    setTimeout(() ->
+      try
+        expect(selfRoom.messages).to.eql [
+          ['alice', '@hubot brightwheel']
+          ['hubot', 'No activities available.']
+        ]
+        done()
+      catch err
+        done err
+      return
+    , 1000)
+
   it 'gets most recent photo activities', (done) ->
     nock('https://schools.mybrightwheel.com')
       .get('/api/v1/students/778d7815-7293-4aa5-85e3-f0fe08159ae2/activities')

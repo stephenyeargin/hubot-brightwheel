@@ -39,6 +39,9 @@ module.exports = (robot) ->
         return Promise.all(activities)
           .then (activitySets) ->
             for activities in activitySets
+              if activities['count'] == 0
+                msg.send "No activities available."
+                return
               for activity in activities['activities']
                 msg.send formatActivity(activity)
       .catch (err) ->
@@ -57,6 +60,9 @@ module.exports = (robot) ->
         return Promise.all(activities)
           .then (activitySets) ->
             for activities in activitySets
+              if activities['count'] == 0
+                msg.send "No activities available."
+                return
               for activity in activities['activities']
                 msg.send formatActivity(activity)
       .catch (err) ->
