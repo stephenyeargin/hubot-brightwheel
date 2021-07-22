@@ -1,5 +1,7 @@
 # Hubot Brightwheel
 
+[![npm version](https://badge.fury.io/js/hubot-brightwheel.svg)](https://badge.fury.io/js/hubot-brightwheel)[![Node CI](https://github.com/stephenyeargin/hubot-brightwheel/actions/workflows/nodejs.yml/badge.svg)](https://github.com/stephenyeargin/hubot-brightwheel/actions/workflows/nodejs.yml)
+
 Show activity and photos from Brightwheel, a daycare management app.
 
 See [`src/brightwheel.coffee`](src/brightwheel.coffee) for full documentation.
