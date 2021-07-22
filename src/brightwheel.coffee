@@ -20,6 +20,7 @@ module.exports = (robot) ->
   base_endpoint = 'https://schools.mybrightwheel.com/api/v1'
   base_headers = {
     'Accept': 'application/json',
+    'Content-type': 'application/json',
     'X-Client-Name': 'web',
     'X-Client-Version': 'b15cec31e66fa803de35b53260872aa7e5e84e29'
   }
@@ -139,14 +140,20 @@ module.exports = (robot) ->
       if auth
         resolve(auth)
         return
+      credentials = JSON.stringify({user: {email: username, password: password} })
       robot.http("#{base_endpoint}/sessions")
         .headers(base_headers)
-        .post({user: {email: username, password: password} }) (err, res, body) ->
+        .post(credentials) (err, res, body) ->
           if err
             robot.logger.error err
             reject(err)
             return
+          if res.statusCode != 201
+            robot.logger.error body
+            reject(res.statusMessage)
+            return
           robot.logger.debug res
+          robot.logger.debug body
           auth = res.headers['set-cookie'][0].split('; ')[0]
           base_headers['Cookie'] = auth
           resolve(auth)
@@ -178,7 +185,9 @@ module.exports = (robot) ->
             .headers(base_headers)
             .query(params)
             .get() (err, res, body) ->
+              robot.logger.debug body
               if (err)
+                robot.logger.error err
                 reject(err)
               resolve(JSON.parse(body))
 

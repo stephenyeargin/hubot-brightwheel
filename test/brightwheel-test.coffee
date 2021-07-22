@@ -11,13 +11,14 @@ helper = new Helper [
 describe 'hubot-brightwheel', ->
   beforeEach ->
     process.env.HUBOT_LOG_LEVEL='error'
+    process.env.TZ = 'America/Chicago'
     process.env.HUBOT_BRIGHTWHEEL_EMAIL='parent@example.org'
     process.env.HUBOT_BRIGHTWHEEL_PASSWORD='testing123'
     nock.disableNetConnect()
     @room = helper.createRoom()
     nock('https://schools.mybrightwheel.com')
-      .post('/api/v1/sessions')
-      .reply(200, {success: true}, {'set-cookie': '_brightwheel_v2=thelongauthstring; domain=.mybrightwheel.com; path=/; expires=Fri, 29 Oct 2021 21:30:10 -0000; secure; HttpOnly; SameSite=Lax'})
+      .post('/api/v1/sessions', {user: {email: 'parent@example.org', password: 'testing123'}})
+      .reply(201, {success: true}, {'set-cookie': '_brightwheel_v2=thelongauthstring; domain=.mybrightwheel.com; path=/; expires=Fri, 29 Oct 2021 21:30:10 -0000; secure; HttpOnly; SameSite=Lax'})
     nock('https://schools.mybrightwheel.com')
       .get('/api/v1/users/me')
       .matchHeader('cookie', '_brightwheel_v2=thelongauthstring')
@@ -29,6 +30,7 @@ describe 'hubot-brightwheel', ->
 
   afterEach ->
     delete process.env.HUBOT_LOG_LEVEL
+    delete process.env.TZ
     delete process.env.HUBOT_BRIGHTWHEEL_EMAIL
     delete process.env.HUBOT_BRIGHTWHEEL_PASSWORD
     nock.cleanAll()
