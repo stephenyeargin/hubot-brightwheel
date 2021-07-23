@@ -57,6 +57,7 @@ describe 'hubot-brightwheel for Slack', ->
             {
               "attachments": [
                 {
+                  "author_name": "Linda Reid"
                   "fallback": "Jenny was in a photo. - https://github.com/github.png"
                   "footer": "Brightwheel"
                   "footer_icon": "https://github.com/brightwheel.png"
@@ -95,6 +96,7 @@ describe 'hubot-brightwheel for Slack', ->
             {
               "attachments": [
                 {
+                  "author_name": "Linda Reid"
                   "fallback": "Jenny was in a video. - https://cdn.mybrightwheel.com/videos/1-download.mp4"
                   "footer": "Brightwheel"
                   "footer_icon": "https://github.com/brightwheel.png"
@@ -133,6 +135,7 @@ describe 'hubot-brightwheel for Slack', ->
             {
               "attachments": [
                 {
+                  "author_name": "Linda Reid"
                   "fallback": "Jenny went potty. (diaper - wet)"
                   "footer": "Brightwheel"
                   "footer_icon": "https://github.com/brightwheel.png"
@@ -168,6 +171,7 @@ describe 'hubot-brightwheel for Slack', ->
             {
               "attachments": [
                 {
+                  "author_name": "Mary Reed"
                   "fallback": "Jenny ended a nap."
                   "footer": "Brightwheel"
                   "footer_icon": "https://github.com/brightwheel.png"
@@ -202,6 +206,7 @@ describe 'hubot-brightwheel for Slack', ->
             {
               "attachments": [
                 {
+                  "author_name": "Linda Reid"
                   "fallback": "Jenny ate gold fish, raisins and h20."
                   "footer": "Brightwheel"
                   "footer_icon": "https://github.com/brightwheel.png"

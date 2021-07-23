@@ -74,6 +74,7 @@ module.exports = (robot) ->
     slackAttachmentTemplate = {
       footer: 'Brightwheel',
       footer_icon: 'https://github.com/brightwheel.png',
+      author_name: "#{activity['actor']['first_name']} #{activity['actor']['last_name']}"
       ts: moment(activity['event_date']).format('X')
     }
     textOutput = textOutput + "#{activity['target']['first_name']}"
@@ -99,11 +100,11 @@ module.exports = (robot) ->
           thumb_url: activity['video_info']['thumbnail_url']
         }))
       when 'ac_potty'
-        textOutput = textOutput + " went potty. (#{activity['details_blob']['potty_type']} - #{activity['details_blob']['potty']})"
+        textOutput = textOutput + " went potty. (#{activity['details_blob']['potty_type']} - #{activity['details_blob']['potty_extras'].join(', ')})"
         slackOutput['attachments'].push(merge(slackAttachmentTemplate, {
           fallback: textOutput,
           title: "#{activity['target']['first_name']} went potty.",
-          text: "#{activity['details_blob']['potty_type']} - #{activity['details_blob']['potty']}"
+          text: "#{activity['details_blob']['potty_type']} - #{activity['details_blob']['potty_extras'].join(', ')}"
         }))
       when 'ac_nap'
         state = if activity['state'] == "1" then 'started' else 'ended'
