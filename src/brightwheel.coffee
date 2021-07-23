@@ -47,7 +47,7 @@ module.exports = (robot) ->
       .catch (err) ->
         msg.send err
 
-  robot.respond /(?:brightwheel|bw) (photo|video|potty|nap|food)$/i, (msg) ->
+  robot.respond /(?:brightwheel|bw) (photo|video|potty|nap|food)s?$/i, (msg) ->
     params = {
       page_size: max_record_count
       action_type: 'ac_' + msg.match[1].toLowerCase()
