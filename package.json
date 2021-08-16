@@ -2,7 +2,7 @@
   "name": "hubot-brightwheel",
   "description": "Show activity and photos from Brightwheel, a daycare management app.",
   "version": "0.1.2",
-  "author": "Stephen Yeargin <stephen.yeargin@gmail.com>",
+  "author": "Stephen Yeargin <stephen@yearg.in>",
   "license": "MIT",
   "keywords": [
     "hubot",
@@ -29,11 +29,11 @@
     "hubot-test-helper": "^1.9.0",
     "husky": "^7.0.1",
     "matchdep": "^2.0.0",
-    "mocha": "^9.0.2",
+    "mocha": "^9.0.3",
     "nock": "^13.1.1",
-    "release-it": "^14.10.0",
+    "release-it": "^14.11.5",
     "require-dir": "^1.2.0",
-    "sinon": "^11.1.1",
+    "sinon": "^11.1.2",
     "sinon-chai": "^3.7.0",
     "travis-cov": "^0.2.5"
   },
