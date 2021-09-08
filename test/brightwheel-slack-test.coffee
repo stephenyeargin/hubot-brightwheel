@@ -176,6 +176,7 @@ describe 'hubot-brightwheel for Slack', ->
                   "footer": "Brightwheel"
                   "footer_icon": "https://github.com/brightwheel.png"
                   "title": "Jenny ended a nap."
+                  "text": null
                   "ts": "1626893483"
                 }
               ]

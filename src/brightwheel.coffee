@@ -70,8 +70,10 @@ module.exports = (robot) ->
 
   formatActivity = (activity) ->
     textOutput = ""
-    slackOutput = {attachments: []}
+    slackOutput = {}
     slackAttachmentTemplate = {
+      title: 'Activity'
+      text: null,
       footer: 'Brightwheel',
       footer_icon: 'https://github.com/brightwheel.png',
       author_name: "#{activity['actor']['first_name']} #{activity['actor']['last_name']}"
@@ -81,38 +83,30 @@ module.exports = (robot) ->
     switch activity['action_type']
       when 'ac_photo'
         textOutput = textOutput + " was in a photo. - #{activity['media']['image_url']}"
-        slackOutput['attachments'].push(merge(slackAttachmentTemplate, {
+        slackOutput = merge(slackAttachmentTemplate, {
           fallback: textOutput,
-          text: activity['note'] || null,
           title: "#{activity['target']['first_name']} was in a photo.",
-          title_link: activity['media']['image_url'],
-          image_url: activity['media']['image_url'],
-          thumb_url: activity['media']['thumbnail_url']
-        }))
+        })
       when 'ac_video'
         textOutput = textOutput + " was in a video. - #{activity['video_info']['downloadable_url']}"
-        slackOutput['attachments'].push(merge(slackAttachmentTemplate, {
+        slackOutput = merge(slackAttachmentTemplate, {
           fallback: textOutput,
-          text: activity['note'] || null,
           title: "#{activity['target']['first_name']} was in a video.",
-          title_link: activity['video_info']['downloadable_url'],
-          image_url: activity['video_info']['thumbnail_url'],
-          thumb_url: activity['video_info']['thumbnail_url']
-        }))
+        })
       when 'ac_potty'
         textOutput = textOutput + " went potty. (#{activity['details_blob']['potty_type']} - #{activity['details_blob']['potty_extras'].join(', ')})"
-        slackOutput['attachments'].push(merge(slackAttachmentTemplate, {
+        slackOutput = merge(slackAttachmentTemplate, {
           fallback: textOutput,
           title: "#{activity['target']['first_name']} went potty.",
           text: "#{activity['details_blob']['potty_type']} - #{activity['details_blob']['potty_extras'].join(', ')}"
-        }))
+        })
       when 'ac_nap'
         state = if activity['state'] == "1" then 'started' else 'ended'
         textOutput = textOutput + " #{state} a nap."
-        slackOutput['attachments'].push(merge(slackAttachmentTemplate, {
+        slackOutput = merge(slackAttachmentTemplate, {
           fallback: textOutput,
           title: "#{activity['target']['first_name']} #{state} a nap."
-        }))
+        })
       when 'ac_food'
         foods = []
         for item in activity['menu_item_tags']
@@ -121,26 +115,36 @@ module.exports = (robot) ->
         if item['notes']
           details = details + " (#{item['notes']})"
         textOutput = textOutput + " ate #{details}."
-        slackOutput['attachments'].push(merge(slackAttachmentTemplate, {
+        slackOutput = merge(slackAttachmentTemplate, {
           fallback: textOutput,
           title: "#{activity['target']['first_name']} ate.",
           text: "#{details}"
-        }))
+        })
       else
         # Catch-all for things we don't know how to handle
         textOutput = textOutput + " - #{activity['action_type'].replace('ac_','')}"
-        slackOutput['attachments'].push(merge(slackAttachmentTemplate, {
+        slackOutput = merge(slackAttachmentTemplate, {
           fallback: textOutput,
           title: "#{activity['target']['first_name']} - #{activity['action_type'].replace('ac_','')}"
-        }))
+        })
     event_time = moment(activity['event_date'])
     if activity['note']
       textOutput = textOutput + " - #{activity['note']}"
+      slackOutput['text'] = [activity['note'], slackOutput['text']].join("\n").trim()
+    if activity['media']? and activity['media']['image_url']?
+      slackOutput['title_link'] = activity['media']['image_url']
+      slackOutput['image_url'] = activity['media']['image_url']
+      slackOutput['thumb_url'] = activity['media']['thumbnail_url']
+    if activity['video_info']? and activity['video_info']['downloadable_url']?
+      slackOutput['title_link'] = activity['video_info']['downloadable_url']
+      slackOutput['image_url'] = activity['video_info']['thumbnail_url']
+      slackOutput['thumb_url'] = activity['video_info']['thumbnail_url']
+
     textOutput = textOutput + " | #{event_time.format('lll')}"
 
     switch robot.adapterName
       when 'slack'
-        output = slackOutput
+        output = {attachments: [slackOutput]}
       else
         output = textOutput
 
