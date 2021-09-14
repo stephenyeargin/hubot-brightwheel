@@ -28,7 +28,6 @@
     "coffee-script": "^1.12.7",
     "hubot-test-helper": "^1.9.0",
     "husky": "^7.0.1",
-    "matchdep": "^2.0.0",
     "mocha": "^9.0.3",
     "nock": "^13.1.1",
     "release-it": "^14.11.5",
