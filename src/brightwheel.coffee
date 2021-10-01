@@ -47,7 +47,7 @@ module.exports = (robot) ->
       .catch (err) ->
         msg.send err
 
-  robot.respond /(?:brightwheel|bw) (photo|video|potty|nap|food)s?$/i, (msg) ->
+  robot.respond /(?:brightwheel|bw) (photo|video|potty|nap|food|kudo)s?$/i, (msg) ->
     params = {
       page_size: max_record_count
       action_type: 'ac_' + msg.match[1].toLowerCase()
@@ -119,6 +119,12 @@ module.exports = (robot) ->
           fallback: textOutput,
           title: "#{activity['target']['first_name']} ate.",
           text: "#{details}"
+        })
+      when 'ac_kudo'
+        textOutput = textOutput + " received kudos."
+        slackOutput = merge(slackAttachmentTemplate, {
+          fallback: textOutput,
+          title: "#{activity['target']['first_name']} received kudos.",
         })
       else
         # Catch-all for things we don't know how to handle
