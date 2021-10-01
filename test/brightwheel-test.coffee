@@ -206,3 +206,24 @@ describe 'hubot-brightwheel', ->
         done err
       return
     , 1000)
+
+  it 'gets most recent kudo activities', (done) ->
+    nock('https://schools.mybrightwheel.com')
+      .get('/api/v1/students/778d7815-7293-4aa5-85e3-f0fe08159ae2/activities')
+      .query({page_size: 5, action_type: 'ac_kudo'})
+      .matchHeader('cookie', '_brightwheel_v2=thelongauthstring')
+      .replyWithFile(200, __dirname + '/fixtures/activities-kudo.json', {'Content-type': 'application/json'})
+
+    selfRoom = @room
+    selfRoom.user.say('alice', '@hubot brightwheel kudo')
+    setTimeout(() ->
+      try
+        expect(selfRoom.messages).to.eql [
+          ['alice', '@hubot brightwheel kudo']
+          ['hubot', 'Jenny received kudos. - Today Jenny rode the tricycle around the playground and didn\'t fall off! | Sep 30, 2021 11:33 AM']
+        ]
+        done()
+      catch err
+        done err
+      return
+    , 1000)

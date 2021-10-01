@@ -224,3 +224,39 @@ describe 'hubot-brightwheel for Slack', ->
         done err
       return
     , 1000)
+
+  it 'gets most recent kudo activities', (done) ->
+    nock('https://schools.mybrightwheel.com')
+      .get('/api/v1/students/778d7815-7293-4aa5-85e3-f0fe08159ae2/activities')
+      .query({page_size: 1, action_type: 'ac_kudo'})
+      .matchHeader('cookie', '_brightwheel_v2=thelongauthstring')
+      .replyWithFile(200, __dirname + '/fixtures/activities-kudo.json', {'Content-type': 'application/json'})
+
+    selfRoom = @room
+    selfRoom.user.say('alice', '@hubot brightwheel kudo')
+    setTimeout(() ->
+      try
+        expect(selfRoom.messages).to.eql [
+          ['alice', '@hubot brightwheel kudo']
+          [
+            'hubot',
+            {
+              "attachments": [
+                {
+                  "author_name": "Mary Reed"
+                  "fallback": "Jenny received kudos."
+                  "footer": "Brightwheel"
+                  "footer_icon": "https://github.com/brightwheel.png"
+                  "text": "Today Jenny rode the tricycle around the playground and didn't fall off!"
+                  "title": "Jenny received kudos."
+                  "ts": "1633019580"
+                }
+              ]
+            }
+          ]
+        ]
+        done()
+      catch err
+        done err
+      return
+    , 1000)
