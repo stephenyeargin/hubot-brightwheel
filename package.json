@@ -1,7 +1,7 @@
 {
   "name": "hubot-brightwheel",
   "description": "Show activity and photos from Brightwheel, a daycare management app.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Stephen Yeargin <stephen@yearg.in>",
   "license": "MIT",
   "keywords": [
