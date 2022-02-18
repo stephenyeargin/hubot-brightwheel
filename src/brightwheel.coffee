@@ -8,7 +8,7 @@
 #
 # Commands:
 #   hubot brightwheel - Show the latest activities.
-#   hubot brightwheel <photo|video|potty|nap|food> - Show the latest activities of a specific type.
+#   hubot brightwheel <checkin|photo|video|potty|nap|food> - Show the latest activities of a specific type.
 #
 # Author:
 #   stephenyeargin
@@ -47,7 +47,7 @@ module.exports = (robot) ->
       .catch (err) ->
         msg.send err
 
-  robot.respond /(?:brightwheel|bw) (photo|video|potty|nap|food|kudo)s?$/i, (msg) ->
+  robot.respond /(?:brightwheel|bw) (checkin|photo|video|potty|nap|food|kudo)s?$/i, (msg) ->
     params = {
       page_size: max_record_count
       action_type: 'ac_' + msg.match[1].toLowerCase()
@@ -81,6 +81,13 @@ module.exports = (robot) ->
     }
     textOutput = textOutput + "#{activity['target']['first_name']}"
     switch activity['action_type']
+      when 'ac_checkin'
+        state = if activity['state'] == '1' then 'in' else 'out'
+        textOutput = textOutput + " was checked #{state}."
+        slackOutput = merge(slackAttachmentTemplate, {
+          fallback: textOutput,
+          title: "#{activity['target']['first_name']} was checked #{state}.",
+        })
       when 'ac_photo'
         textOutput = textOutput + " was in a photo. - #{activity['media']['image_url']}"
         slackOutput = merge(slackAttachmentTemplate, {

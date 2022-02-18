@@ -82,6 +82,31 @@ describe 'hubot-brightwheel', ->
       return
     , 1000)
 
+  it 'gets most recent checkin activities', (done) ->
+    nock('https://schools.mybrightwheel.com')
+      .get('/api/v1/students/778d7815-7293-4aa5-85e3-f0fe08159ae2/activities')
+      .query({page_size: 5, action_type: 'ac_checkin'})
+      .matchHeader('cookie', '_brightwheel_v2=thelongauthstring')
+      .replyWithFile(200, __dirname + '/fixtures/activities-checkin.json', {'Content-type': 'application/json'})
+
+    selfRoom = @room
+    selfRoom.user.say('alice', '@hubot brightwheel checkin')
+    setTimeout(() ->
+      try
+        expect(selfRoom.messages).to.eql [
+          ['alice', '@hubot brightwheel checkin']
+          ['hubot', 'Jenny was checked out. | Feb 17, 2022 2:32 PM']
+          ['hubot', 'Jenny was checked in. | Feb 17, 2022 8:12 AM']
+          ['hubot', 'Jenny was checked out. | Feb 16, 2022 5:01 PM']
+          ['hubot', 'Jenny was checked in. | Feb 16, 2022 8:11 AM']
+          ['hubot', 'Jenny was checked out. | Feb 15, 2022 5:01 PM']
+        ]
+        done()
+      catch err
+        done err
+      return
+    , 1000)
+
   it 'gets most recent photo activities', (done) ->
     nock('https://schools.mybrightwheel.com')
       .get('/api/v1/students/778d7815-7293-4aa5-85e3-f0fe08159ae2/activities')
