@@ -59,7 +59,7 @@ describe 'hubot-brightwheel', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets an empty activity list', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -80,7 +80,7 @@ describe 'hubot-brightwheel', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent checkin activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -105,7 +105,7 @@ describe 'hubot-brightwheel', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent photo activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -130,7 +130,7 @@ describe 'hubot-brightwheel', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent video activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -155,7 +155,7 @@ describe 'hubot-brightwheel', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent potty activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -180,7 +180,7 @@ describe 'hubot-brightwheel', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent nap activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -205,7 +205,7 @@ describe 'hubot-brightwheel', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent food activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -230,7 +230,7 @@ describe 'hubot-brightwheel', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent kudo activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -251,7 +251,7 @@ describe 'hubot-brightwheel', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
 describe 'hubot-brightwheel login failure', ->
   beforeEach ->
@@ -286,4 +286,4 @@ describe 'hubot-brightwheel login failure', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)

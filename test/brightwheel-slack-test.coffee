@@ -76,7 +76,7 @@ describe 'hubot-brightwheel for Slack', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent video activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -115,7 +115,7 @@ describe 'hubot-brightwheel for Slack', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent potty activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -151,7 +151,7 @@ describe 'hubot-brightwheel for Slack', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent nap activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -187,7 +187,7 @@ describe 'hubot-brightwheel for Slack', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent food activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -223,7 +223,7 @@ describe 'hubot-brightwheel for Slack', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
 
   it 'gets most recent kudo activities', (done) ->
     nock('https://schools.mybrightwheel.com')
@@ -259,4 +259,4 @@ describe 'hubot-brightwheel for Slack', ->
       catch err
         done err
       return
-    , 1000)
+    , 100)
