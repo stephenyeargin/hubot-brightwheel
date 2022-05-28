@@ -252,3 +252,38 @@ describe 'hubot-brightwheel', ->
         done err
       return
     , 1000)
+
+describe 'hubot-brightwheel login failure', ->
+  beforeEach ->
+    process.env.HUBOT_LOG_LEVEL='error'
+    process.env.TZ = 'America/Chicago'
+    process.env.HUBOT_BRIGHTWHEEL_EMAIL='parent@example.org'
+    process.env.HUBOT_BRIGHTWHEEL_PASSWORD='testing123'
+    nock.disableNetConnect()
+    @room = helper.createRoom()
+    nock('https://schools.mybrightwheel.com')
+      .post('/api/v1/sessions', {user: {email: 'parent@example.org', password: 'testing123'}})
+      .replyWithFile(200, __dirname + '/fixtures/login-failure.json', {'Content-type': 'application/json'})
+
+  afterEach ->
+    delete process.env.HUBOT_LOG_LEVEL
+    delete process.env.TZ
+    delete process.env.HUBOT_BRIGHTWHEEL_EMAIL
+    delete process.env.HUBOT_BRIGHTWHEEL_PASSWORD
+    nock.cleanAll()
+    @room.destroy()
+
+  it 'returns a login failure message', (done) ->
+    selfRoom = @room
+    selfRoom.user.say('alice', '@hubot brightwheel')
+    setTimeout(() ->
+      try
+        expect(selfRoom.messages).to.eql [
+          ['alice', '@hubot brightwheel']
+          ['hubot', 'User is invalid: You must specify the user [E1205]']
+        ]
+        done()
+      catch err
+        done err
+      return
+    , 1000)

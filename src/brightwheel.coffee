@@ -45,7 +45,7 @@ module.exports = (robot) ->
               for activity in activities['activities']
                 msg.send formatActivity(activity)
       .catch (err) ->
-        msg.send err
+        msg.send formatError(err)
 
   robot.respond /(?:brightwheel|bw) (checkin|photo|video|potty|nap|food|kudo)s?$/i, (msg) ->
     params = {
@@ -66,7 +66,7 @@ module.exports = (robot) ->
               for activity in activities['activities']
                 msg.send formatActivity(activity)
       .catch (err) ->
-        msg.send err
+        msg.send formatError(err)
 
   formatActivity = (activity) ->
     textOutput = ""
@@ -178,7 +178,7 @@ module.exports = (robot) ->
             return
           if res.statusCode != 201
             robot.logger.error body
-            reject(res.statusMessage)
+            reject(body)
             return
           robot.logger.debug res
           robot.logger.debug body
@@ -218,6 +218,17 @@ module.exports = (robot) ->
                 robot.logger.error err
                 reject(err)
               resolve(JSON.parse(body))
+        .catch (err) ->
+          reject(err)
+
+  formatError = (err) ->
+    json = JSON.parse(err)
+    if !json
+      return err
+    output = []
+    for error in json._errors
+      output.push "#{error.title}: #{error.message} [#{error.code}]"
+    output.join('; ')
 
   # Helper Methods
   merge = (xs...) ->
