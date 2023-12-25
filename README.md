@@ -4,8 +4,6 @@
 
 Show activity and photos from Brightwheel, a daycare management app.
 
-See [`src/brightwheel.coffee`](src/brightwheel.coffee) for full documentation.
-
 ## Installation
 
 In hubot project repo, run:
