@@ -144,8 +144,8 @@ module.exports = (robot) => {
 
     textOutput += ` | ${eventTime.format('lll')}`;
 
-    switch (robot.adapterName) {
-      case 'slack':
+    switch (true) {
+      case /slack/i.test(robot.adapterName):
         output = { attachments: [slackOutput] };
         break;
       default:
