@@ -12,5 +12,8 @@ module.exports = {
   },
   rules: {
     'no-param-reassign': ['error', { props: false }],
+    'consistent-return': 'off',
+    'no-restricted-syntax': 'off',
+    'guard-for-in': 'off',
   },
 };
