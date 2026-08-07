@@ -18,7 +18,7 @@
     "url": "https://github.com/stephenyeargin/hubot-brightwheel/issues"
   },
   "dependencies": {
-    "moment-timezone": "^0.5.43"
+    "moment-timezone": "^0.6.3"
   },
   "peerDependencies": {
     "hubot": ">=3 || 0.0.0-development"
