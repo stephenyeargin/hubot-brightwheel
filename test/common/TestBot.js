@@ -20,8 +20,29 @@ class TestBotContext {
 
   async send(message) {
     const id = (Math.random() + 1).toString(36).substring(7);
+
+    // Wait until `send`/`reply` events go quiet, rather than a fixed delay,
+    // since some commands emit several messages and request timing varies
+    // across environments (a fixed sleep was too short on slower CI runners).
+    let lastEventAt = null;
+    const markEvent = () => { lastEventAt = Date.now(); };
+    this.robot.adapter.on('send', markEvent);
+    this.robot.adapter.on('reply', markEvent);
+
     this.robot.adapter.receive(new TextMessage(this.user, message, id));
-    await new Promise((done) => { setTimeout(done, 50); });
+
+    const quietMs = 25;
+    const maxWaitMs = 2000;
+    const start = Date.now();
+    const stillWaiting = () => Date.now() - start < maxWaitMs
+      && (!lastEventAt || Date.now() - lastEventAt < quietMs);
+    do {
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise((done) => { setTimeout(done, 10); });
+    } while (stillWaiting());
+
+    this.robot.adapter.removeListener('send', markEvent);
+    this.robot.adapter.removeListener('reply', markEvent);
   }
 
   async sendAndWaitForResponse(message, responseType = 'send') {
