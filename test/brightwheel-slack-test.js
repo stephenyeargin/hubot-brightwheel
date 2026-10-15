@@ -2,7 +2,7 @@ const {
   test, before, after, describe,
 } = require('node:test');
 const assert = require('node:assert/strict');
-const nock = require('nock');
+const nock = require('nock').default;
 const path = require('path');
 const { createTestBot } = require('./common/TestBot');
 
